@@ -1,0 +1,949 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Eck Alex Renov — Artisan Rénovation Intérieure | Île-de-France</title>
+  <meta name="description" content="Eck Alex Renov, artisan rénovation : pose de revêtement de sol, menuiserie, salle de bain, cuisine et meubles. Travail soigné, devis gratuit sous 24h en Île-de-France." />
+  <meta name="theme-color" content="#1C1A17" />
+
+  <!-- ===== GOOGLE FONTS (seule dépendance externe) ===== -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Playfair+Display:ital,wght@0,700;1,700&display=swap" rel="stylesheet" />
+
+  <style>
+    /* ===== TOKENS & RESET ===== */
+    :root {
+      --stone: #1C1A17; /* fond principal — bois carbonisé */
+      --sand:  #E8DDD0; /* texte principal — sable chaud */
+      --gold:  #B8975A; /* accent signature — laiton/cuivre */
+      --smoke: #2E2B27; /* cards / sections alternées */
+      --mist:  #6B6459; /* texte secondaire, labels */
+      --white: #F5F2EE; /* titres phares — blanc cassé parchemin */
+
+      --gold-soft: rgba(184, 151, 90, 0.14);
+      --border: rgba(184, 151, 90, 0.18);
+
+      --font-display: 'Playfair Display', Georgia, serif;
+      --font-body: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+
+      --pad-section: 100px;
+      --maxw: 1200px;
+      --ease: cubic-bezier(0.22, 1, 0.36, 1);
+    }
+
+    *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+
+    html { scroll-behavior: smooth; scroll-padding-top: 80px; }
+
+    body {
+      font-family: var(--font-body);
+      background-color: var(--stone);
+      color: var(--sand);
+      line-height: 1.65;
+      letter-spacing: 0.01em;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+      /* Texture grain de bois en SVG inline + glow ambiant gold */
+      background-image:
+        radial-gradient(ellipse 60% 50% at 15% 95%, var(--gold-soft) 0%, transparent 60%),
+        url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg fill='none' stroke='%23B8975A' stroke-width='0.6' opacity='0.5'%3E%3Cpath d='M0 12 Q35 4 70 12 T140 12'/%3E%3Cpath d='M0 30 Q35 24 70 30 T140 30'/%3E%3Cpath d='M0 50 Q35 42 70 50 T140 50'/%3E%3Cpath d='M0 70 Q35 64 70 70 T140 70'/%3E%3Cpath d='M0 90 Q35 82 70 90 T140 90'/%3E%3Cpath d='M0 110 Q35 104 70 110 T140 110'/%3E%3Cpath d='M0 130 Q35 122 70 130 T140 130'/%3E%3C/g%3E%3C/svg%3E");
+      background-attachment: fixed, fixed;
+      background-repeat: no-repeat, repeat;
+    }
+    /* L'overlay grain reste discret (opacity ~0.03 via opacité de stroke + couche dédiée) */
+    body::before {
+      content: "";
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cg fill='none' stroke='%23B8975A' stroke-width='0.8'%3E%3Cpath d='M0 20 Q35 10 70 20 T140 20'/%3E%3Cpath d='M0 60 Q35 50 70 60 T140 60'/%3E%3Cpath d='M0 100 Q35 90 70 100 T140 100'/%3E%3C/g%3E%3C/svg%3E");
+      background-repeat: repeat;
+      opacity: 0.03;
+      z-index: 0;
+    }
+
+    img { max-width: 100%; display: block; }
+    a { color: inherit; text-decoration: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+    ul { list-style: none; }
+
+    ::selection { background: var(--gold); color: var(--stone); }
+
+    /* ===== TYPOGRAPHIE UTILITAIRES ===== */
+    .eyebrow {
+      font-family: var(--font-body);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.15em;
+      color: var(--gold);
+      font-size: 0.78rem;
+      display: inline-block;
+      margin-bottom: 1.2rem;
+    }
+    h1, h2, h3 { font-family: var(--font-display); font-weight: 700; color: var(--white); line-height: 1.1; }
+    .italic { font-style: italic; }
+
+    .container { width: 100%; max-width: var(--maxw); margin: 0 auto; padding: 0 28px; }
+
+    section { position: relative; z-index: 1; padding: var(--pad-section) 0; }
+
+    /* ===== BOUTONS ===== */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.6rem;
+      font-weight: 600;
+      font-size: 0.95rem;
+      letter-spacing: 0.02em;
+      padding: 0.95rem 1.9rem;
+      border-radius: 2px;
+      transition: all 0.3s var(--ease);
+      border: 1px solid transparent;
+    }
+    .btn-gold {
+      background: var(--gold);
+      color: var(--stone);
+    }
+    .btn-gold:hover {
+      background: var(--white);
+      transform: translateY(-2px);
+      box-shadow: 0 12px 30px -10px rgba(184, 151, 90, 0.5);
+    }
+    .btn-outline {
+      border-color: var(--mist);
+      color: var(--sand);
+    }
+    .btn-outline:hover {
+      border-color: var(--gold);
+      color: var(--gold);
+      transform: translateY(-2px);
+    }
+
+    /* ===== HEADER FIXE ===== */
+    header {
+      position: fixed;
+      top: 0; left: 0; right: 0;
+      z-index: 100;
+      transition: background 0.4s var(--ease), border-color 0.4s var(--ease), padding 0.4s var(--ease);
+      border-bottom: 1px solid transparent;
+    }
+    header.scrolled {
+      background: rgba(28, 26, 23, 0.92);
+      backdrop-filter: blur(12px);
+      -webkit-backdrop-filter: blur(12px);
+      border-bottom-color: var(--border);
+    }
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 22px 0;
+      transition: padding 0.4s var(--ease);
+    }
+    header.scrolled .nav-inner { padding: 16px 0; }
+
+    .logo { font-size: 1.35rem; letter-spacing: 0.04em; }
+    .logo .eck { font-family: var(--font-display); font-weight: 700; color: var(--white); }
+    .logo .renov {
+      font-family: var(--font-body);
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--gold);
+      font-size: 0.95rem;
+      margin-left: 0.45rem;
+    }
+
+    .nav-links { display: flex; align-items: center; gap: 2.4rem; }
+    .nav-links a {
+      font-size: 0.9rem;
+      font-weight: 500;
+      color: var(--sand);
+      position: relative;
+      padding: 4px 0;
+      transition: color 0.3s var(--ease);
+    }
+    .nav-links a::after {
+      content: "";
+      position: absolute;
+      left: 0; bottom: -2px;
+      width: 0; height: 1px;
+      background: var(--gold);
+      transition: width 0.3s var(--ease);
+    }
+    .nav-links a:hover, .nav-links a.active { color: var(--gold); }
+    .nav-links a.active::after, .nav-links a:hover::after { width: 100%; }
+
+    .nav-phone {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-weight: 600;
+      font-size: 0.9rem;
+      color: var(--white);
+      border: 1px solid var(--border);
+      padding: 0.55rem 1.1rem;
+      border-radius: 2px;
+      transition: all 0.3s var(--ease);
+    }
+    .nav-phone:hover { border-color: var(--gold); color: var(--gold); background: var(--gold-soft); }
+    .nav-phone svg { width: 16px; height: 16px; stroke: var(--gold); }
+
+    .nav-right { display: flex; align-items: center; gap: 1.6rem; }
+
+    /* Hamburger */
+    .burger { display: none; width: 30px; height: 22px; position: relative; z-index: 110; }
+    .burger span {
+      position: absolute; left: 0;
+      width: 100%; height: 2px;
+      background: var(--white);
+      transition: all 0.35s var(--ease);
+    }
+    .burger span:nth-child(1) { top: 0; }
+    .burger span:nth-child(2) { top: 50%; transform: translateY(-50%); }
+    .burger span:nth-child(3) { bottom: 0; }
+    body.menu-open .burger span:nth-child(1) { top: 50%; transform: translateY(-50%) rotate(45deg); }
+    body.menu-open .burger span:nth-child(2) { opacity: 0; }
+    body.menu-open .burger span:nth-child(3) { bottom: 50%; transform: translateY(50%) rotate(-45deg); }
+
+    /* Overlay menu mobile */
+    .mobile-menu {
+      position: fixed;
+      inset: 0;
+      background: var(--stone);
+      z-index: 105;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 1.8rem;
+      transform: translateX(100%);
+      transition: transform 0.45s var(--ease);
+    }
+    body.menu-open .mobile-menu { transform: translateX(0); }
+    .mobile-menu a {
+      font-family: var(--font-display);
+      font-size: 2rem;
+      color: var(--sand);
+      transition: color 0.3s var(--ease);
+    }
+    .mobile-menu a:hover { color: var(--gold); }
+    .mobile-menu .btn { font-family: var(--font-body); font-size: 1rem; margin-top: 1rem; }
+
+    /* ===== HERO ===== */
+    .hero {
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      padding-top: 120px;
+      padding-bottom: 80px;
+    }
+    .hero-line1 { font-family: var(--font-body); font-weight: 500; color: var(--mist); font-size: clamp(1.1rem, 2vw, 1.5rem); letter-spacing: 0.04em; }
+    .hero-line2 {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-weight: 700;
+      color: var(--white);
+      font-size: clamp(3.6rem, 11vw, 8rem);
+      line-height: 0.95;
+      margin: 0.1em 0;
+    }
+    .hero-line3 {
+      font-family: var(--font-display);
+      font-weight: 700;
+      color: var(--gold);
+      font-size: clamp(2.6rem, 8vw, 5.5rem);
+      line-height: 1;
+    }
+    .hero-sub {
+      max-width: 540px;
+      margin: 2rem 0 2.6rem;
+      font-size: 1.1rem;
+      color: var(--sand);
+    }
+    .hero-ctas { display: flex; flex-wrap: wrap; gap: 1rem; }
+
+    .scroll-badge {
+      position: absolute;
+      bottom: 36px; left: 50%;
+      transform: translateX(-50%);
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.18em;
+      color: var(--mist);
+      animation: pulse 2.4s ease-in-out infinite;
+    }
+    @keyframes pulse {
+      0%, 100% { transform: translateX(-50%) translateY(0); opacity: 0.6; }
+      50% { transform: translateX(-50%) translateY(8px); opacity: 1; }
+    }
+
+    /* ===== SECTION TITRES GÉNÉRIQUES ===== */
+    .section-head { max-width: 640px; margin-bottom: 3.5rem; }
+    .section-head h2 { font-size: clamp(2.2rem, 5vw, 3.4rem); margin-bottom: 0.8rem; }
+    .section-head .sub { color: var(--mist); font-size: 1.1rem; }
+    .text-center { text-align: center; margin-left: auto; margin-right: auto; }
+
+    /* ===== À PROPOS ===== */
+    .about { background: var(--stone); }
+    .about-grid {
+      display: grid;
+      grid-template-columns: 1.3fr 1fr;
+      gap: 4rem;
+      align-items: center;
+    }
+    .about-text h2 { font-size: clamp(2rem, 4.5vw, 3rem); margin-bottom: 1.5rem; }
+    .about-text p { color: var(--sand); margin-bottom: 1.2rem; max-width: 540px; }
+    .about-text p:last-child { margin-bottom: 0; }
+
+    .values-card {
+      background: var(--smoke);
+      border-left: 1px solid var(--gold);
+      padding: 2.8rem 2.4rem;
+      border-radius: 2px;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+    .value-item { display: flex; flex-direction: column; }
+    .value-num { font-family: var(--font-display); font-size: 2.8rem; color: var(--gold); line-height: 1; }
+    .value-label { color: var(--sand); font-weight: 500; margin-top: 0.3rem; }
+    .value-item + .value-item { padding-top: 1.6rem; border-top: 1px solid var(--border); }
+
+    /* ===== SERVICES ===== */
+    .services { background: var(--smoke); }
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.6rem;
+    }
+    .service-card {
+      background: var(--stone);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 2.4rem 2rem;
+      transition: transform 0.3s var(--ease), border-color 0.3s var(--ease), box-shadow 0.3s var(--ease);
+      display: flex;
+      flex-direction: column;
+    }
+    .service-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--gold);
+      box-shadow: 0 24px 50px -24px rgba(0,0,0,0.6);
+    }
+    .service-icon {
+      width: 52px; height: 52px;
+      margin-bottom: 1.5rem;
+      color: var(--gold);
+    }
+    .service-icon svg { width: 100%; height: 100%; stroke: var(--gold); fill: none; stroke-width: 1.4; }
+    .service-card h3 { font-size: 1.4rem; margin-bottom: 0.7rem; }
+    .service-card p { color: var(--mist); font-size: 0.95rem; flex-grow: 1; }
+    .tag {
+      display: inline-block;
+      margin-top: 1.4rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--gold);
+      align-self: flex-start;
+    }
+
+    /* ===== RÉALISATIONS ===== */
+    .work { background: var(--stone); }
+    .work-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.4rem;
+    }
+    .work-item {
+      position: relative;
+      background: var(--smoke);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      aspect-ratio: 4 / 3;
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: border-color 0.3s var(--ease), transform 0.3s var(--ease);
+    }
+    .work-item:hover { border-color: var(--gold); transform: translateY(-4px); }
+    .work-num {
+      font-family: var(--font-display);
+      font-size: 4.5rem;
+      font-weight: 700;
+      font-style: italic;
+      color: var(--gold);
+      opacity: 0.85;
+      transition: transform 0.4s var(--ease);
+    }
+    .work-item:hover .work-num { transform: scale(1.08); }
+    .work-label {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      padding: 1rem 1.2rem;
+      font-size: 0.85rem;
+      color: var(--sand);
+      background: linear-gradient(to top, rgba(28,26,23,0.95), transparent);
+    }
+    .work-ig {
+      position: absolute;
+      top: 0.9rem; right: 0.9rem;
+      display: inline-flex;
+      align-items: center;
+      gap: 0.35rem;
+      font-size: 0.72rem;
+      font-weight: 600;
+      color: var(--stone);
+      background: var(--gold);
+      padding: 0.35rem 0.6rem;
+      border-radius: 2px;
+      opacity: 0;
+      transform: translateY(-6px);
+      transition: all 0.3s var(--ease);
+    }
+    .work-item:hover .work-ig { opacity: 1; transform: translateY(0); }
+
+    /* ===== TÉMOIGNAGES ===== */
+    .reviews { background: var(--smoke); }
+    .reviews-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 1.6rem;
+    }
+    .review-card {
+      background: var(--stone);
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 2.4rem 2rem;
+      position: relative;
+    }
+    .review-card .quote-mark {
+      font-family: var(--font-display);
+      font-style: italic;
+      font-size: 4rem;
+      color: var(--gold);
+      line-height: 0.6;
+      display: block;
+      margin-bottom: 0.6rem;
+    }
+    .review-card p { color: var(--sand); font-style: italic; margin-bottom: 1.6rem; }
+    .review-author { font-weight: 600; color: var(--white); font-size: 0.95rem; }
+    .review-stars { color: var(--gold); letter-spacing: 0.1em; margin-top: 0.3rem; font-size: 0.85rem; }
+
+    /* ===== CONTACT ===== */
+    .contact { background: var(--stone); }
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1.4fr 1fr;
+      gap: 4rem;
+    }
+    .form-group { margin-bottom: 1.8rem; }
+    .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1.4rem; }
+    label {
+      display: block;
+      font-size: 0.72rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--mist);
+      margin-bottom: 0.5rem;
+    }
+    input, select, textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--mist);
+      color: var(--sand);
+      font-family: inherit;
+      font-size: 1rem;
+      padding: 0.7rem 0;
+      transition: border-color 0.3s var(--ease);
+    }
+    input:focus, select:focus, textarea:focus { outline: none; border-bottom-color: var(--gold); }
+    select option { background: var(--smoke); color: var(--sand); }
+    textarea { resize: vertical; min-height: 90px; }
+    .form-submit { margin-top: 0.6rem; }
+    .form-submit .btn { width: 100%; justify-content: center; }
+
+    .contact-info { display: flex; flex-direction: column; gap: 1.6rem; }
+    .contact-info h3 { font-size: 1.3rem; margin-bottom: 0.4rem; }
+    .info-item {
+      display: flex;
+      align-items: center;
+      gap: 0.9rem;
+      color: var(--sand);
+      transition: color 0.3s var(--ease);
+    }
+    a.info-item:hover { color: var(--gold); }
+    .info-item .ic {
+      flex: 0 0 38px;
+      width: 38px; height: 38px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      color: var(--gold);
+      font-size: 1.05rem;
+    }
+
+    /* ===== FOOTER ===== */
+    footer {
+      background: var(--smoke);
+      border-top: 1px solid var(--border);
+      padding: 64px 0 40px;
+      text-align: center;
+      position: relative;
+      z-index: 1;
+    }
+    .footer-logo { font-size: 1.5rem; margin-bottom: 0.6rem; }
+    .footer-tag { color: var(--mist); font-style: italic; font-family: var(--font-display); margin-bottom: 1.8rem; }
+    .footer-social { display: flex; justify-content: center; margin-bottom: 1.8rem; }
+    .footer-social a {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      width: 46px; height: 46px;
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      transition: all 0.3s var(--ease);
+    }
+    .footer-social a:hover { border-color: var(--gold); background: var(--gold-soft); transform: translateY(-3px); }
+    .footer-social svg { width: 20px; height: 20px; stroke: var(--gold); fill: none; stroke-width: 1.6; }
+    .footer-legal { color: var(--mist); font-size: 0.82rem; letter-spacing: 0.02em; }
+
+    /* ===== SCROLL REVEAL ===== */
+    .reveal { opacity: 0; transform: translateY(36px); transition: opacity 0.8s var(--ease), transform 0.8s var(--ease); }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal.d1 { transition-delay: 0.08s; }
+    .reveal.d2 { transition-delay: 0.16s; }
+    .reveal.d3 { transition-delay: 0.24s; }
+    .reveal.d4 { transition-delay: 0.32s; }
+    @media (prefers-reduced-motion: reduce) {
+      .reveal { opacity: 1; transform: none; transition: none; }
+      .scroll-badge { animation: none; }
+      html { scroll-behavior: auto; }
+    }
+
+    /* ===== RESPONSIVE ===== */
+    @media (max-width: 1200px) {
+      .services-grid { grid-template-columns: repeat(3, 1fr); }
+    }
+    @media (max-width: 980px) {
+      .about-grid { grid-template-columns: 1fr; gap: 2.6rem; }
+      .contact-grid { grid-template-columns: 1fr; gap: 2.8rem; }
+      .services-grid, .work-grid, .reviews-grid { grid-template-columns: repeat(2, 1fr); }
+    }
+    @media (max-width: 768px) {
+      :root { --pad-section: 64px; }
+      .nav-links, .nav-phone { display: none; }
+      .burger { display: block; }
+      .hero { padding-top: 100px; }
+      .reviews-grid {
+        grid-auto-flow: column;
+        grid-auto-columns: 82%;
+        grid-template-columns: none;
+        overflow-x: auto;
+        scroll-snap-type: x mandatory;
+        padding-bottom: 1rem;
+        -webkit-overflow-scrolling: touch;
+      }
+      .review-card { scroll-snap-align: start; }
+    }
+    @media (max-width: 560px) {
+      .container { padding: 0 20px; }
+      .services-grid, .work-grid { grid-template-columns: 1fr; }
+      .form-row { grid-template-columns: 1fr; gap: 0; }
+      .form-row .form-group { margin-bottom: 1.8rem; }
+      .hero-ctas .btn { width: 100%; justify-content: center; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ===== HEADER ===== -->
+  <header id="header">
+    <div class="container nav-inner">
+      <a href="#hero" class="logo" aria-label="Eck Alex Renov — Accueil">
+        <span class="eck">Eck Alex</span><span class="renov">Renov</span>
+      </a>
+
+      <div class="nav-right">
+        <nav class="nav-links" aria-label="Navigation principale">
+          <a href="#hero" class="active">Accueil</a>
+          <a href="#services">Services</a>
+          <a href="#realisations">Réalisations</a>
+          <a href="#contact">Contact</a>
+        </nav>
+        <a href="tel:+33600000000" class="nav-phone" aria-label="Appeler Eck Alex Renov">
+          <svg viewBox="0 0 24 24" fill="none" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 16.92v3a2 2 0 0 1-2.18 2 19.79 19.79 0 0 1-8.63-3.07 19.5 19.5 0 0 1-6-6 19.79 19.79 0 0 1-3.07-8.67A2 2 0 0 1 4.11 2h3a2 2 0 0 1 2 1.72c.13.96.36 1.9.7 2.81a2 2 0 0 1-.45 2.11L8.09 9.91a16 16 0 0 0 6 6l1.27-1.27a2 2 0 0 1 2.11-.45c.91.34 1.85.57 2.81.7A2 2 0 0 1 22 16.92z"/>
+          </svg>
+          06 00 00 00 00
+        </a>
+        <button class="burger" id="burger" aria-label="Ouvrir le menu" aria-expanded="false" aria-controls="mobile-menu">
+          <span></span><span></span><span></span>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- ===== MENU MOBILE ===== -->
+  <nav class="mobile-menu" id="mobile-menu" aria-label="Menu mobile">
+    <a href="#hero" data-close>Accueil</a>
+    <a href="#services" data-close>Services</a>
+    <a href="#realisations" data-close>Réalisations</a>
+    <a href="#contact" data-close>Contact</a>
+    <a href="tel:+33600000000" class="btn btn-gold" data-close>06 00 00 00 00</a>
+  </nav>
+
+  <!-- ===== HERO ===== -->
+  <section class="hero" id="hero">
+    <div class="container">
+      <div class="reveal">
+        <p class="hero-line1">L'artisan qui</p>
+        <h1 class="hero-line2 italic">transforme</h1>
+        <p class="hero-line3">vos espaces.</p>
+      </div>
+      <p class="hero-sub reveal d1">Rénovation intérieure sur-mesure en Île-de-France. Du sol au mobilier, un travail soigné réalisé avec exigence et passion.</p>
+      <div class="hero-ctas reveal d2">
+        <a href="#contact" class="btn btn-gold">Demander un devis</a>
+        <a href="#services" class="btn btn-outline">Voir les services</a>
+      </div>
+    </div>
+    <a href="#about" class="scroll-badge" aria-label="Faire défiler vers le bas">↓ Découvrir</a>
+  </section>
+
+  <!-- ===== À PROPOS ===== -->
+  <section class="about" id="about">
+    <div class="container about-grid">
+      <div class="about-text reveal">
+        <span class="eyebrow">À propos</span>
+        <h2>Sérieux. Précis.<br>À l'écoute.</h2>
+        <p>Je suis Alex, artisan rénovateur passionné par le travail bien fait. Jeune, motivé et exigeant, je mets un point d'honneur à traiter chaque chantier comme s'il s'agissait du mien.</p>
+        <p>Soin du détail, respect des délais, propreté du chantier et communication transparente : voilà les engagements qui guident chacune de mes interventions. Le devis est gratuit et sans surprise — vous savez exactement où vous allez.</p>
+      </div>
+      <div class="values-card reveal d2">
+        <div class="value-item">
+          <span class="value-num">100%</span>
+          <span class="value-label">Travail soigné</span>
+        </div>
+        <div class="value-item">
+          <span class="value-num">0€</span>
+          <span class="value-label">Devis gratuit</span>
+        </div>
+        <div class="value-item">
+          <span class="value-num">J+1</span>
+          <span class="value-label">Réponse rapide</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== SERVICES ===== -->
+  <section class="services" id="services">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Savoir-faire</span>
+        <h2>Mes Services</h2>
+        <p class="sub">Du sol au plafond, chaque détail compte.</p>
+      </div>
+      <div class="services-grid">
+
+        <article class="service-card reveal">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><rect x="6" y="10" width="36" height="28" rx="1.5"/><path d="M6 19h36M6 28h36M16 10v9M27 19v9M37 28v10M11 28v10"/></svg>
+          </div>
+          <h3>Revêtement de sol</h3>
+          <p>Parquet, carrelage, stratifié, vinyle LVT. Pose soignée et durable sur tout type de surface, finitions impeccables.</p>
+          <span class="tag">Sur devis</span>
+        </article>
+
+        <article class="service-card reveal d1">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><rect x="12" y="6" width="24" height="36" rx="1.5"/><path d="M12 6v36"/><circle cx="29" cy="24" r="1.6" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <h3>Menuiserie</h3>
+          <p>Portes, placards, boiseries, plinthes. Découpe et pose de précision pour un rendu net et harmonieux.</p>
+          <span class="tag">Sur devis</span>
+        </article>
+
+        <article class="service-card reveal d2">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><path d="M10 20h28v14a4 4 0 0 1-4 4H14a4 4 0 0 1-4-4V20z"/><path d="M24 20v-6a4 4 0 0 1 8 0"/><path d="M16 26v6M24 26v6M32 26v6"/></svg>
+          </div>
+          <h3>Salle de bain</h3>
+          <p>Rénovation complète : faïence, douche à l'italienne, baignoire, plomberie et mobilier. Une pièce repensée de A à Z.</p>
+          <span class="tag">Sur devis</span>
+        </article>
+
+        <article class="service-card reveal">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><rect x="8" y="14" width="32" height="24" rx="1.5"/><path d="M8 22h32M18 14v8M8 30h32"/><circle cx="14" cy="18" r="1.4" fill="currentColor" stroke="none"/></svg>
+          </div>
+          <h3>Cuisine</h3>
+          <p>Pose de cuisine, plan de travail, crédence et électroménager. Un résultat fonctionnel et impeccable, garanti.</p>
+          <span class="tag">Sur devis</span>
+        </article>
+
+        <article class="service-card reveal d1">
+          <div class="service-icon" aria-hidden="true">
+            <svg viewBox="0 0 48 48" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22V14a3 3 0 0 1 3-3h18a3 3 0 0 1 3 3v8"/><path d="M8 22h32v8H8z"/><path d="M12 30v8M36 30v8"/></svg>
+          </div>
+          <h3>Meubles</h3>
+          <p>Montage et installation de meubles sur-mesure ou en kit. Assemblage rigoureux et fixation parfaitement de niveau.</p>
+          <span class="tag">Sur devis</span>
+        </article>
+
+        <article class="service-card reveal d2" style="display:flex; align-items:center; justify-content:center; text-align:center; background:var(--gold-soft); border-color:var(--gold);">
+          <div>
+            <h3 style="color:var(--gold); margin-bottom:0.8rem;">Un autre projet ?</h3>
+            <p style="color:var(--sand); margin-bottom:1.4rem;">Parlons-en. J'étudie chaque demande de rénovation intérieure avec attention.</p>
+            <a href="#contact" class="btn btn-gold">Me contacter</a>
+          </div>
+        </article>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== RÉALISATIONS ===== -->
+  <section class="work" id="realisations">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Portfolio</span>
+        <h2>Mes Réalisations</h2>
+        <p class="sub">Un aperçu des chantiers menés avec exigence.</p>
+      </div>
+      <div class="work-grid">
+        <a href="https://www.instagram.com/eckalexrenov/" target="_blank" rel="noopener" class="work-item reveal" aria-label="Réalisation 01 — Parquet chêne, Paris 15e — voir sur Instagram">
+          <span class="work-num">01</span>
+          <span class="work-ig">📷 @eckalexrenov</span>
+          <span class="work-label">Parquet chêne — Paris 15e</span>
+        </a>
+        <a href="https://www.instagram.com/eckalexrenov/" target="_blank" rel="noopener" class="work-item reveal d1" aria-label="Réalisation 02 — Salle de bain, Boulogne — voir sur Instagram">
+          <span class="work-num">02</span>
+          <span class="work-ig">📷 @eckalexrenov</span>
+          <span class="work-label">Salle de bain complète — Boulogne</span>
+        </a>
+        <a href="https://www.instagram.com/eckalexrenov/" target="_blank" rel="noopener" class="work-item reveal d2" aria-label="Réalisation 03 — Cuisine, Vincennes — voir sur Instagram">
+          <span class="work-num">03</span>
+          <span class="work-ig">📷 @eckalexrenov</span>
+          <span class="work-label">Cuisine équipée — Vincennes</span>
+        </a>
+        <a href="https://www.instagram.com/eckalexrenov/" target="_blank" rel="noopener" class="work-item reveal" aria-label="Réalisation 04 — Placard sur-mesure, Paris 12e — voir sur Instagram">
+          <span class="work-num">04</span>
+          <span class="work-ig">📷 @eckalexrenov</span>
+          <span class="work-label">Placard sur-mesure — Paris 12e</span>
+        </a>
+        <a href="https://www.instagram.com/eckalexrenov/" target="_blank" rel="noopener" class="work-item reveal d1" aria-label="Réalisation 05 — Carrelage, Montreuil — voir sur Instagram">
+          <span class="work-num">05</span>
+          <span class="work-ig">📷 @eckalexrenov</span>
+          <span class="work-label">Carrelage grand format — Montreuil</span>
+        </a>
+        <a href="https://www.instagram.com/eckalexrenov/" target="_blank" rel="noopener" class="work-item reveal d2" aria-label="Réalisation 06 — Menuiserie, Saint-Mandé — voir sur Instagram">
+          <span class="work-num">06</span>
+          <span class="work-ig">📷 @eckalexrenov</span>
+          <span class="work-label">Boiseries & plinthes — Saint-Mandé</span>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== TÉMOIGNAGES ===== -->
+  <section class="reviews" id="temoignages">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Ils m'ont fait confiance</span>
+        <h2>Témoignages</h2>
+        <p class="sub">La satisfaction de mes clients, ma meilleure publicité.</p>
+      </div>
+      <div class="reviews-grid">
+        <article class="review-card reveal">
+          <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+          <p>Travail impeccable, Alex a posé notre parquet en 2 jours. Propre, ponctuel, prix juste. Je recommande sans hésiter.</p>
+          <div class="review-author">Mathieu D. — Paris 11e</div>
+          <div class="review-stars" aria-label="Note 5 sur 5">★★★★★</div>
+        </article>
+        <article class="review-card reveal d1">
+          <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+          <p>Rénovation complète de notre salle de bain. Résultat magnifique, à l'écoute du début à la fin. Un vrai professionnel.</p>
+          <div class="review-author">Sophie L. — Boulogne</div>
+          <div class="review-stars" aria-label="Note 5 sur 5">★★★★★</div>
+        </article>
+        <article class="review-card reveal d2">
+          <span class="quote-mark" aria-hidden="true">&ldquo;</span>
+          <p>Devis clair et rapide, chantier respecté au jour près. La cuisine est superbe. Merci pour le sérieux et la qualité.</p>
+          <div class="review-author">Karim B. — Vincennes</div>
+          <div class="review-stars" aria-label="Note 5 sur 5">★★★★★</div>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== CONTACT ===== -->
+  <section class="contact" id="contact">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Devis gratuit</span>
+        <h2>Parlons de votre projet</h2>
+        <p class="sub">Devis gratuit et sans engagement sous 24h.</p>
+      </div>
+      <div class="contact-grid">
+        <form class="reveal" action="#" method="post" aria-label="Formulaire de demande de devis">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="prenom">Prénom</label>
+              <input type="text" id="prenom" name="prenom" autocomplete="given-name" required />
+            </div>
+            <div class="form-group">
+              <label for="nom">Nom</label>
+              <input type="text" id="nom" name="nom" autocomplete="family-name" required />
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="tel">Téléphone</label>
+            <input type="tel" id="tel" name="tel" autocomplete="tel" required />
+          </div>
+          <div class="form-group">
+            <label for="email">Email</label>
+            <input type="email" id="email" name="email" autocomplete="email" required />
+          </div>
+          <div class="form-group">
+            <label for="type">Type de travaux</label>
+            <select id="type" name="type" required>
+              <option value="">Sélectionnez…</option>
+              <option>Revêtement de sol</option>
+              <option>Menuiserie</option>
+              <option>Salle de bain</option>
+              <option>Cuisine</option>
+              <option>Meubles</option>
+              <option>Autre</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Votre message</label>
+            <textarea id="message" name="message" placeholder="Décrivez votre projet…"></textarea>
+          </div>
+          <div class="form-submit">
+            <button type="submit" class="btn btn-gold">Envoyer ma demande</button>
+          </div>
+        </form>
+
+        <div class="contact-info reveal d2">
+          <div>
+            <h3>Coordonnées</h3>
+            <span class="eyebrow" style="margin-bottom:0;">Contact direct</span>
+          </div>
+          <a class="info-item" href="tel:+33600000000" aria-label="Appeler">
+            <span class="ic" aria-hidden="true">📞</span>
+            <span>06 00 00 00 00</span>
+          </a>
+          <a class="info-item" href="https://wa.me/33600000000" target="_blank" rel="noopener" aria-label="Contacter sur WhatsApp">
+            <span class="ic" aria-hidden="true">📱</span>
+            <span>WhatsApp — réponse rapide</span>
+          </a>
+          <a class="info-item" href="https://www.instagram.com/eckalexrenov/" target="_blank" rel="noopener" aria-label="Voir le profil Instagram">
+            <span class="ic" aria-hidden="true">📸</span>
+            <span>@eckalexrenov</span>
+          </a>
+          <div class="info-item">
+            <span class="ic" aria-hidden="true">🕐</span>
+            <span>Disponible lun–sam, 8h–19h</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===== FOOTER ===== -->
+  <footer>
+    <div class="container">
+      <div class="logo footer-logo"><span class="eck">Eck Alex</span><span class="renov">Renov</span></div>
+      <p class="footer-tag">L'artisan de votre intérieur</p>
+      <div class="footer-social">
+        <a href="https://www.instagram.com/eckalexrenov/" target="_blank" rel="noopener" aria-label="Instagram de Eck Alex Renov">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <rect x="3" y="3" width="18" height="18" rx="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="0.6" fill="currentColor" stroke="none"/>
+          </svg>
+        </a>
+      </div>
+      <p class="footer-legal">© 2026 Eck Alex Renov — Tous droits réservés</p>
+    </div>
+  </footer>
+
+  <!-- ===== JS ===== -->
+  <script>
+    'use strict';
+
+    /* ===== Header au scroll ===== */
+    var header = document.getElementById('header');
+    function onScroll() {
+      if (window.scrollY > 40) { header.classList.add('scrolled'); }
+      else { header.classList.remove('scrolled'); }
+    }
+    window.addEventListener('scroll', onScroll, { passive: true });
+    onScroll();
+
+    /* ===== Menu mobile (hamburger + overlay) ===== */
+    var burger = document.getElementById('burger');
+    var mobileMenu = document.getElementById('mobile-menu');
+    function toggleMenu(force) {
+      var open = typeof force === 'boolean' ? force : !document.body.classList.contains('menu-open');
+      document.body.classList.toggle('menu-open', open);
+      burger.setAttribute('aria-expanded', String(open));
+    }
+    burger.addEventListener('click', function () { toggleMenu(); });
+    Array.prototype.forEach.call(mobileMenu.querySelectorAll('[data-close]'), function (link) {
+      link.addEventListener('click', function () { toggleMenu(false); });
+    });
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape') { toggleMenu(false); }
+    });
+
+    /* ===== Scroll reveal (IntersectionObserver) ===== */
+    var reveals = document.querySelectorAll('.reveal');
+    if ('IntersectionObserver' in window) {
+      var io = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) {
+            entry.target.classList.add('visible');
+            io.unobserve(entry.target);
+          }
+        });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      reveals.forEach(function (el) { io.observe(el); });
+    } else {
+      reveals.forEach(function (el) { el.classList.add('visible'); });
+    }
+
+    /* ===== Scrollspy — lien nav actif ===== */
+    var sections = ['hero', 'services', 'realisations', 'contact'].map(function (id) {
+      return document.getElementById(id);
+    });
+    var navLinks = document.querySelectorAll('.nav-links a');
+    function setActive(id) {
+      navLinks.forEach(function (a) {
+        a.classList.toggle('active', a.getAttribute('href') === '#' + id);
+      });
+    }
+    if ('IntersectionObserver' in window) {
+      var spy = new IntersectionObserver(function (entries) {
+        entries.forEach(function (entry) {
+          if (entry.isIntersecting) { setActive(entry.target.id); }
+        });
+      }, { rootMargin: '-45% 0px -50% 0px' });
+      sections.forEach(function (s) { if (s) spy.observe(s); });
+    }
+  </script>
+</body>
+</html>
