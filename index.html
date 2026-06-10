@@ -239,6 +239,14 @@
       align-items: center;
       padding-top: 120px;
       padding-bottom: 80px;
+      /* Photo de rénovation intérieure + voile sombre dégradé (lisibilité du texte) + glow gold */
+      background-image:
+        radial-gradient(ellipse 55% 50% at 12% 90%, var(--gold-soft) 0%, transparent 60%),
+        linear-gradient(105deg, rgba(28,26,23,0.97) 0%, rgba(28,26,23,0.88) 38%, rgba(28,26,23,0.62) 72%, rgba(28,26,23,0.42) 100%),
+        url("https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&w=1920&q=80");
+      background-size: cover, cover, cover;
+      background-position: center, center, center;
+      background-repeat: no-repeat;
     }
     .hero-line1 { font-family: var(--font-body); font-weight: 500; color: var(--mist); font-size: clamp(1.1rem, 2vw, 1.5rem); letter-spacing: 0.04em; }
     .hero-line2 {
@@ -547,7 +555,14 @@
       :root { --pad-section: 64px; }
       .nav-links, .nav-phone { display: none; }
       .burger { display: block; }
-      .hero { padding-top: 100px; }
+      .hero {
+        padding-top: 100px;
+        background-image:
+          radial-gradient(ellipse 70% 40% at 20% 92%, var(--gold-soft) 0%, transparent 60%),
+          linear-gradient(180deg, rgba(28,26,23,0.92) 0%, rgba(28,26,23,0.80) 45%, rgba(28,26,23,0.88) 100%),
+          url("https://images.unsplash.com/photo-1581858726788-75bc0f6a952d?auto=format&fit=crop&w=1080&q=75");
+        background-attachment: scroll;
+      }
       .reviews-grid {
         grid-auto-flow: column;
         grid-auto-columns: 82%;
